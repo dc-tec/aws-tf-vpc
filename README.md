@@ -58,9 +58,3 @@ If the plan looks good, apply it:
 ```
 terraform apply
 ```
-
-### Contributing
-Contributions to this repository are welcome. Please make sure to test your changes thoroughly before submitting a pull request.
-
-### License
-This project is licensed under the MIT License. See the LICENSE file for details.

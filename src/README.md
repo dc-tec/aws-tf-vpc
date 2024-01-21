@@ -8,39 +8,27 @@
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+No providers.
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | ./_modules/vpc | n/a |
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_default_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_security_group) | resource |
-| [aws_eip.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
-| [aws_internet_gateway.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
-| [aws_nat_gateway.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
-| [aws_route_table.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
-| [aws_route_table_association.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
-| [aws_security_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_subnet.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_vpc.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
-| [aws_vpc_security_group_egress_rule.egr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.igr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
+No resources.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_ec2_instance_config"></a> [ec2\_instance\_config](#input\_ec2\_instance\_config) | EC2 instance configuration | <pre>map(object({<br>    ami                         = string<br>    instance_type               = string<br>    security_group_name         = list(string)<br>    subnet_name                 = string<br>    availability_zone           = string<br>    associate_public_ip_address = optional(bool, false)<br>    availability_zone           = string<br>  }))</pre> | `{}` | no |
 | <a name="input_igw_config"></a> [igw\_config](#input\_igw\_config) | Internet gateway configuration | <pre>map(object({<br>    vpc_name = string<br>  }))</pre> | `{}` | no |
 | <a name="input_ngw_config"></a> [ngw\_config](#input\_ngw\_config) | NAT gateway configuration | <pre>map(object({<br>    vpc_name    = string<br>    subnet_name = string<br>  }))</pre> | `{}` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | `"eu-west-1"` | no |
-| <a name="input_rt_config"></a> [rt\_config](#input\_rt\_config) | Route table configuration | <pre>map(object({<br>    vpc_name = string<br>    routes : list(object({<br>      cidr_block = string<br>      use_igw    = optional(bool, true)<br>      igw_name   = optional(string, "")<br>      use_ngw    = optional(bool, false)<br>      ngw_name   = optional(string, "")<br>      # use_ec2ni  = optional(bool, false)<br>      # use_vpcpc  = optional(bool, false)<br>      # use_vpce   = optional(bool, false)<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_rt_config"></a> [rt\_config](#input\_rt\_config) | Route table configuration | <pre>map(object({<br>    vpc_name = string<br>    routes : list(object({<br>      cidr_block = string<br>      use_igw    = optional(bool, false)<br>      igw_name   = optional(string, "default")<br>      use_ngw    = optional(bool, false)<br>      ngw_name   = optional(string, "default")<br>      # use_ec2ni  = optional(bool, false)<br>      # use_vpcpc  = optional(bool, false)<br>      # use_vpce   = optional(bool, false)<br>    }))<br>  }))</pre> | `{}` | no |
 | <a name="input_rta_config"></a> [rta\_config](#input\_rta\_config) | Route table association configuration | <pre>map(object({<br>    subnet_name      = string<br>    route_table_name = string<br>  }))</pre> | `{}` | no |
 | <a name="input_sg_config"></a> [sg\_config](#input\_sg\_config) | n/a | <pre>map(object({<br>    vpc_name = string<br>    ingress = map(object({<br>      from_port           = number<br>      to_port             = number<br>      protocol            = string<br>      cidr_ipv4           = optional(string)<br>      security_group_name = optional(string)<br>    }))<br>    egress = map(object({<br>      from_port           = number<br>      to_port             = number<br>      protocol            = string<br>      cidr_ipv4           = optional(string)<br>      security_group_name = optional(string)<br>    }))<br>  }))</pre> | `{}` | no |
 | <a name="input_sn_config"></a> [sn\_config](#input\_sn\_config) | Subnet configuration | <pre>map(object({<br>    vpc_name          = string<br>    cidr_block        = string<br>    availability_zone = string<br>  }))</pre> | `{}` | no |

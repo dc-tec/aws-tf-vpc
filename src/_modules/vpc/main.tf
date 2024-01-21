@@ -68,7 +68,7 @@ resource "aws_eip" "main" {
 }
 
 resource "aws_nat_gateway" "main" {
-  depends_on = [ aws_internet_gateway.main ]
+  depends_on = [aws_internet_gateway.main]
   for_each   = var.ngw_config
 
   allocation_id = aws_eip.main[each.key].id

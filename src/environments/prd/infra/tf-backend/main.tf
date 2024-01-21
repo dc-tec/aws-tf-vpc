@@ -49,7 +49,8 @@ data "aws_iam_policy_document" "main" {
 }
 
 module "s3" {
-  source = "../../../../_modules/s3"
+  source  = "app.terraform.io/deCort-tech/s3/aws"
+  version = "1.0.0"
 
   ## S3 configuration
   s3_config = local.s3_config

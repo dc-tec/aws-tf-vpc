@@ -31,6 +31,12 @@ The S3 module creates an S3 Bucket, it takes the following input:
 
 The S3 Bucket module also expects a policy, please use a `aws_iam_policy_document` to define a policy for your S3 bucket
 
+### EC2 Module
+
+The EC2 module creates EC2 instances. It depends on the VPC module and takes the following input:
+
+- `ec2_instance_config`: Configuration for the EC2 instances.
+
 ## Usage
 Before you run, make sure that you have a IAM account in AWS with access and secret keys. Set these as environment variables:
 ```

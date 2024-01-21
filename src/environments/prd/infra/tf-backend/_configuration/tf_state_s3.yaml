@@ -1,0 +1,7 @@
+---
+s3_config:
+  tf_state_bucket:
+    bucket: "tf-state-bucket"
+    acl: "private"
+    versioning: "Enabled"
+    object_ownership: "BucketOwnerPreferred"

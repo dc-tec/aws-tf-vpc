@@ -1,0 +1,4 @@
+---
+# more info on TFsec config: https://aquasecurity.github.io/tfsec/v1.0.0-rc.8/getting-started/configuration/config/
+exclude: []
+...

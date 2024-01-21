@@ -4,7 +4,7 @@ This repository contains Terraform code for provisioning AWS infrastructure, inc
 
 ## Prerequisites
 
-- Terraform >= 1.1.0
+- Terraform >= 1.7.0
 - AWS Provider ~> 5.0
 
 ## Modules
@@ -23,6 +23,14 @@ The VPC module creates a VPC and related networking components. It takes the fol
 - `rta_config`: Configuration for the route table associations.
 - `sg_config`: Configuration for the security groups.
 
+### S3 Module
+
+The S3 module creates an S3 Bucket, it takes the following input:
+
+- `s3_config`: Configuration for the S3 Bucket
+
+The S3 Bucket module also expects a policy, please use a `aws_iam_policy_document` to define a policy for your S3 bucket
+
 ## Usage
 Before you run, make sure that you have a IAM account in AWS with access and secret keys. Set these as environment variables:
 ```
@@ -37,12 +45,12 @@ terraform init
 
 Then, create a plan:
 ```
-terraform plan -var-file=vars/vpc-dev.tfvars -var-file=vars/ec2-dev.tfvars
+terraform plan
 ```
 
 If the plan looks good, apply it:
 ```
-terraform apply -var-file=vars/vpc-dev.tfvars -var-file=vars/ec2-dev.tfvars
+terraform apply
 ```
 
 ### Contributing

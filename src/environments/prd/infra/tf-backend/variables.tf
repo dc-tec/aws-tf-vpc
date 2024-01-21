@@ -7,7 +7,7 @@ variable "tags" {
   description = "Tags for resources"
   type        = map(string)
   default = {
-    environment = "Dev"
+    environment = "prd"
     managedBy   = "Terraform"
   }
 }

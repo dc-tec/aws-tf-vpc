@@ -13,7 +13,8 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "../../../../_modules/vpc"
+  source  = "app.terraform.io/deCort-tech/vpc/aws"
+  version = "1.0.0"
 
   ## VPC configuration
   vpc                      = local.vpc_config

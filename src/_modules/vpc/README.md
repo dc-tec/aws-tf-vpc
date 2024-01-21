@@ -29,23 +29,23 @@ No modules.
 | [aws_security_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_subnet.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
-| [aws_vpc_security_group_egress_rule.egr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.igr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
+| [aws_vpc_security_group_egress_rule.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
+| [aws_vpc_security_group_ingress_rule.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_igw_config"></a> [igw\_config](#input\_igw\_config) | Internet gateway configuration | <pre>map(object({<br>    vpc_name = string<br>  }))</pre> | `{}` | no |
-| <a name="input_ngw_config"></a> [ngw\_config](#input\_ngw\_config) | NAT gateway configuration | <pre>map(object({<br>    vpc_name    = string<br>    subnet_name = string<br>  }))</pre> | `{}` | no |
+| <a name="input_internet_gateway"></a> [internet\_gateway](#input\_internet\_gateway) | Internet gateway configuration | <pre>map(object({<br>    vpc_name = string<br>  }))</pre> | `{}` | no |
+| <a name="input_nat_gateway"></a> [nat\_gateway](#input\_nat\_gateway) | NAT gateway configuration | <pre>map(object({<br>    vpc_name    = string<br>    subnet_name = string<br>  }))</pre> | `{}` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | `"eu-west-1"` | no |
-| <a name="input_rt_config"></a> [rt\_config](#input\_rt\_config) | Route table configuration | <pre>map(object({<br>    vpc_name = string<br>    routes : list(object({<br>      cidr_block = string<br>      use_igw    = optional(bool, true)<br>      igw_name   = optional(string, "")<br>      use_ngw    = optional(bool, false)<br>      ngw_name   = optional(string, "")<br>      # use_ec2ni  = optional(bool, false)<br>      # use_vpcpc  = optional(bool, false)<br>      # use_vpce   = optional(bool, false)<br>    }))<br>  }))</pre> | `{}` | no |
-| <a name="input_rta_config"></a> [rta\_config](#input\_rta\_config) | Route table association configuration | <pre>map(object({<br>    subnet_name      = string<br>    route_table_name = string<br>  }))</pre> | `{}` | no |
-| <a name="input_sg_config"></a> [sg\_config](#input\_sg\_config) | n/a | <pre>map(object({<br>    vpc_name = string<br>    ingress = map(object({<br>      from_port           = number<br>      to_port             = number<br>      protocol            = string<br>      cidr_ipv4           = optional(string)<br>      security_group_name = optional(string)<br>    }))<br>    egress = map(object({<br>      from_port           = number<br>      to_port             = number<br>      protocol            = string<br>      cidr_ipv4           = optional(string)<br>      security_group_name = optional(string)<br>    }))<br>  }))</pre> | `{}` | no |
-| <a name="input_sn_config"></a> [sn\_config](#input\_sn\_config) | Subnet configuration | <pre>map(object({<br>    vpc_name          = string<br>    cidr_block        = string<br>    availability_zone = string<br>  }))</pre> | `{}` | no |
+| <a name="input_route_table_associations"></a> [route\_table\_associations](#input\_route\_table\_associations) | Route table association configuration | <pre>map(object({<br>    subnet_name      = string<br>    route_table_name = string<br>  }))</pre> | `{}` | no |
+| <a name="input_route_tables"></a> [route\_tables](#input\_route\_tables) | Route table configuration | <pre>map(object({<br>    vpc_name = string<br>    routes : list(object({<br>      cidr_block = string<br>      use_igw    = optional(bool, true)<br>      igw_name   = optional(string, "")<br>      use_ngw    = optional(bool, false)<br>      ngw_name   = optional(string, "")<br>      # use_ec2ni  = optional(bool, false)<br>      # use_vpcpc  = optional(bool, false)<br>      # use_vpce   = optional(bool, false)<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_security_groups"></a> [security\_groups](#input\_security\_groups) | n/a | <pre>map(object({<br>    vpc_name = string<br>    ingress = map(object({<br>      from_port           = number<br>      to_port             = number<br>      protocol            = string<br>      cidr_ipv4           = optional(string)<br>      security_group_name = optional(string)<br>    }))<br>    egress = map(object({<br>      from_port           = number<br>      to_port             = number<br>      protocol            = string<br>      cidr_ipv4           = optional(string)<br>      security_group_name = optional(string)<br>    }))<br>  }))</pre> | `{}` | no |
+| <a name="input_subnets"></a> [subnets](#input\_subnets) | Subnet configuration | <pre>map(object({<br>    vpc_name          = string<br>    cidr_block        = string<br>    availability_zone = string<br>  }))</pre> | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags for resources | `map(string)` | <pre>{<br>  "environment": "Dev",<br>  "managedBy": "Terraform"<br>}</pre> | no |
-| <a name="input_vpc_config"></a> [vpc\_config](#input\_vpc\_config) | VPC configuration | <pre>map(object({<br>    cidr_block           = string<br>    enable_dns           = optional(bool, true)<br>    enable_dns_hostnames = optional(bool, false)<br>  }))</pre> | `{}` | no |
+| <a name="input_vpc"></a> [vpc](#input\_vpc) | VPC configuration | <pre>map(object({<br>    cidr_block           = string<br>    enable_dns           = optional(bool, true)<br>    enable_dns_hostnames = optional(bool, false)<br>  }))</pre> | `{}` | no |
 
 ## Outputs
 

@@ -1,0 +1,33 @@
+rt_config:
+  rt1-dev1:
+    vpc_name: "dev1"
+    routes:
+      - cidr_block: "0.0.0.0/0"
+        use_igw: true
+        igw_name: "igw1-dev1"
+        use_ngw: false
+  
+  rt2-dev1:
+    vpc_name: "dev1"
+    routes:
+      - cidr_block: "0.0.0.0/0"
+        use_igw: false
+        use_ngw: true
+        ngw_name: "ngw1-dev1"
+
+rta_config:
+  rta1-dev1:
+    subnet_name: "public1-dev1"
+    route_table_name: "rt1-dev1"
+  
+  rta2-dev1:
+    subnet_name: "public2-dev1"
+    route_table_name: "rt1-dev1"
+  
+  rta3-dev1:
+    subnet_name: "private1-dev1"
+    route_table_name: "rt2-dev1"
+  
+  rta4-dev1:
+    subnet_name: "private2-dev1"
+    route_table_name: "rt2-dev1"

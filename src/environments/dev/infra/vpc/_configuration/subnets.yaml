@@ -1,0 +1,30 @@
+sn_config:
+  public1-dev1:
+    vpc_name: "dev1"
+    cidr_block: "10.0.1.0/24"
+    availability_zone: "eu-west-1a"
+  
+  public2-dev1:
+    vpc_name: "dev1"
+    cidr_block: "10.0.2.0/24"
+    availability_zone: "eu-west-1b"
+  
+  private1-dev1:
+    vpc_name: "dev1"
+    cidr_block: "10.0.10.0/24"
+    availability_zone: "eu-west-1a"
+  
+  private2-dev1:
+    vpc_name: "dev1"
+    cidr_block: "10.0.20.0/24"
+    availability_zone: "eu-west-1b"
+  
+  reserve1-dev1:
+    vpc_name: "dev1"
+    cidr_block: "10.0.100.0/24"
+    availability_zone: "eu-west-1a"
+  
+  reserve2-dev1:
+    vpc_name: "dev1"
+    cidr_block: "10.0.200.0/24"
+    availability_zone: "eu-west-1b"

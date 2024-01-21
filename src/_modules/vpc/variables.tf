@@ -3,7 +3,7 @@ variable "region" {
   default     = "eu-west-1"
 }
 
-variable "vpc_config" {
+variable "vpc" {
   description = "VPC configuration"
   type = map(object({
     cidr_block           = string
@@ -13,7 +13,7 @@ variable "vpc_config" {
   default = {}
 }
 
-variable "sn_config" {
+variable "subnets" {
   description = "Subnet configuration"
   type = map(object({
     vpc_name          = string
@@ -23,7 +23,7 @@ variable "sn_config" {
   default = {}
 }
 
-variable "igw_config" {
+variable "internet_gateway" {
   description = "Internet gateway configuration"
   type = map(object({
     vpc_name = string
@@ -31,7 +31,7 @@ variable "igw_config" {
   default = {}
 }
 
-variable "ngw_config" {
+variable "nat_gateway" {
   description = "NAT gateway configuration"
   type = map(object({
     vpc_name    = string
@@ -40,7 +40,7 @@ variable "ngw_config" {
   default = {}
 }
 
-variable "rt_config" {
+variable "route_tables" {
   description = "Route table configuration"
   type = map(object({
     vpc_name = string
@@ -58,7 +58,7 @@ variable "rt_config" {
   default = {}
 }
 
-variable "rta_config" {
+variable "route_table_associations" {
   description = "Route table association configuration"
   type = map(object({
     subnet_name      = string
@@ -67,7 +67,7 @@ variable "rta_config" {
   default = {}
 }
 
-variable "sg_config" {
+variable "security_groups" {
   type = map(object({
     vpc_name = string
     ingress = map(object({

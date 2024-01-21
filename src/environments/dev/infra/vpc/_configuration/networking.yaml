@@ -1,0 +1,13 @@
+igw_config:
+  igw1-dev1:
+    vpc_name: "dev1"
+
+ngw_config:
+  ngw1-dev1:
+    vpc_name: "dev1"
+    subnet_name: "public1-dev1"
+  
+  ngw2-dev1:
+    vpc_name: "dev1"
+    subnet_name: "public2-dev1"
+

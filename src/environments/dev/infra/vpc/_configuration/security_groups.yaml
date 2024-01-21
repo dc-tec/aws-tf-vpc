@@ -1,0 +1,45 @@
+sg_config:
+  bastion-dev1:
+    vpc_name: "dev1"
+    ingress:
+      ssh:
+        from_port: 22
+        to_port: 22
+        protocol: "tcp"
+        cidr_ipv4: "185.222.103.33/32"
+    egress:
+      http:
+        from_port: 80
+        to_port: 80
+        protocol: "tcp"
+        cidr_ipv4: "0.0.0.0/0"
+      https:
+        from_port: 443
+        to_port: 443
+        protocol: "tcp"
+        cidr_ipv4: "0.0.0.0/0"
+      ssh:
+        from_port: 22
+        to_port: 22
+        protocol: "tcp"
+        security_group_name: "private-dev1"
+  
+  private-dev1:
+    vpc_name: "dev1"
+    ingress:
+      ssh:
+        from_port: 22
+        to_port: 22
+        protocol: "tcp"
+        security_group_name: "bastion-dev1"
+    egress:
+      http:
+        from_port: 80
+        to_port: 80
+        protocol: "tcp"
+        cidr_ipv4: "0.0.0.0/0"
+      https:
+        from_port: 443
+        to_port: 443
+        protocol: "tcp"
+        cidr_ipv4: "0.0.0.0/0"

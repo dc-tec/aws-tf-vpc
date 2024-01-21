@@ -11,7 +11,7 @@ terraform {
 data "aws_region" "current" {}
 
 resource "aws_vpc" "main" {
-  for_each = var.vpc_config
+  for_each = var.vpc
 
   cidr_block           = each.value.cidr_block
   enable_dns_support   = each.value.enable_dns
@@ -27,7 +27,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "main" {
   for_each = {
-    for key, value in var.sn_config : key => value
+    for key, value in var.subnets : key => value
   }
 
   vpc_id            = aws_vpc.main[each.value.vpc_name].id
@@ -43,7 +43,7 @@ resource "aws_subnet" "main" {
 }
 
 resource "aws_internet_gateway" "main" {
-  for_each = var.igw_config
+  for_each = var.internet_gateway
 
   vpc_id = aws_vpc.main[each.value.vpc_name].id
 
@@ -56,7 +56,7 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_eip" "main" {
-  for_each = var.ngw_config
+  for_each = var.nat_gateway
 
   domain = "vpc"
   tags = merge(
@@ -69,7 +69,7 @@ resource "aws_eip" "main" {
 
 resource "aws_nat_gateway" "main" {
   depends_on = [aws_internet_gateway.main]
-  for_each   = var.ngw_config
+  for_each   = var.nat_gateway
 
   allocation_id = aws_eip.main[each.key].id
   subnet_id     = aws_subnet.main[each.value.subnet_name].id
@@ -83,7 +83,7 @@ resource "aws_nat_gateway" "main" {
 }
 
 resource "aws_route_table" "main" {
-  for_each = var.rt_config
+  for_each = var.route_tables
 
   vpc_id = aws_vpc.main[each.value.vpc_name].id
 
@@ -92,8 +92,8 @@ resource "aws_route_table" "main" {
 
     content {
       cidr_block     = route.value.cidr_block
-      gateway_id     = route.value.use_igw ? aws_internet_gateway.igw[route.value.igw_name].id : null
-      nat_gateway_id = route.value.use_ngw ? aws_nat_gateway.ngw[route.value.ngw_name].id : null
+      gateway_id     = route.value.use_igw ? aws_internet_gateway.main[route.value.igw_name].id : null
+      nat_gateway_id = route.value.use_ngw ? aws_nat_gateway.main[route.value.ngw_name].id : null
       # network_interface_id      = route.value.use_ec2ni ? aws_network_interface.ec2ni[each.key].id : route.value.network_interface_id
       # vpc_peering_connection_id = route.value.use_vpcpc ? aws_vpc_peering_connection.vpcpc[each.key].id : route.value.vpc_peering_connection_id
       # vpc_endpoint_id           = route.value.use_vpce ? aws_vpc_endpoint.vpce[each.key].id : route.value.vpc_endpoint_id
@@ -109,14 +109,14 @@ resource "aws_route_table" "main" {
 }
 
 resource "aws_route_table_association" "main" {
-  for_each = var.rta_config
+  for_each = var.route_table_associations
 
-  subnet_id      = aws_subnet.sn[each.value.subnet_name].id
-  route_table_id = aws_route_table.rt[each.value.route_table_name].id
+  subnet_id      = aws_subnet.main[each.value.subnet_name].id
+  route_table_id = aws_route_table.main[each.value.route_table_name].id
 }
 
 resource "aws_security_group" "main" {
-  for_each = var.sg_config
+  for_each = var.security_groups
 
   description = "Security group for ${each.value.vpc_name} VPC"
 
@@ -130,10 +130,10 @@ resource "aws_security_group" "main" {
   )
 }
 
-resource "aws_vpc_security_group_ingress_rule" "igr" {
+resource "aws_vpc_security_group_ingress_rule" "main" {
   for_each = {
     for sg in flatten([
-      for sg_name, sg_config in var.sg_config :
+      for sg_name, sg_config in var.security_groups :
       [for rule_name, rule_config in sg_config.ingress :
         {
           sg_name     = sg_name
@@ -152,10 +152,10 @@ resource "aws_vpc_security_group_ingress_rule" "igr" {
   referenced_security_group_id = try(aws_security_group.main[each.value.rule_config.security_group_name].id, null)
 }
 
-resource "aws_vpc_security_group_egress_rule" "egr" {
+resource "aws_vpc_security_group_egress_rule" "main" {
   for_each = {
     for sg in flatten([
-      for sg_name, sg_config in var.sg_config :
+      for sg_name, sg_config in var.security_groups :
       [for rule_name, rule_config in sg_config.egress :
         {
           sg_name     = sg_name
@@ -176,7 +176,7 @@ resource "aws_vpc_security_group_egress_rule" "egr" {
 }
 
 resource "aws_default_security_group" "default" {
-  for_each = var.vpc_config
+  for_each = var.vpc
 
   vpc_id = aws_vpc.main[each.key].id
 

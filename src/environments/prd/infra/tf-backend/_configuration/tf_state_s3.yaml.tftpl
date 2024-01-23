@@ -1,0 +1,54 @@
+---
+s3_config:
+  tf_state_bucket:
+    bucket: "tf-state-bucket"
+    acl: "private"
+    versioning: "Enabled"
+    object_ownership: "BucketOwnerPreferred"
+
+iam_config:
+  policies:
+    assume_role_policy:
+      statements:
+        - effect: "Allow"
+          principals:
+            - type: "AWS"
+              identifier: "${user_arn}"
+          actions:
+            - "sts:AssumeRole"
+
+    tf_backend_policy:
+      statements:
+        - sid: "ListObjectsInBucket"
+          effect: "Allow"
+          actions:
+            - "s3:ListBucket"
+          resources:
+            - "arn:aws:s3:::s3-${bucket_name}-${region_name}"
+
+        - sid: "ReadWriteObjectsInBucket"
+          effect: "Allow"
+          actions:
+            - "s3:GetObject"
+            - "s3:PutObject"
+            - "s3:DeleteObject"
+          resources:
+            - "arn:aws:s3:::s3-${bucket_name}-${region_name}/*"
+
+        - sid: "DynamoDbStateLocking"
+          effect: "Allow"
+          actions:
+            - "dynamodb:DescribeTable"
+            - "dynamodb:PutItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:GetItem"
+          resources:
+            - "arn:aws:dynamodb:${region_name}:${account_id}:table/${dynamodb_table_name}"
+
+  roles:
+    - name: "tf_state_backend_role"
+      description: "Role for Terraform State Management"
+      assume_role_policy: "assume_role_policy"
+      policy_to_attach: "tf_backend_policy"
+
+    

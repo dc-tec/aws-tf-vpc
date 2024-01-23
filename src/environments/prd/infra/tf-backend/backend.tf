@@ -1,5 +1,10 @@
 terraform {
-  backend "local" {
-    path = "terraform.tfstate"
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "deCort-tech"
+
+    workspaces {
+      name = "tf-backend"
+    }
   }
 }

@@ -8,7 +8,7 @@ data "aws_iam_policy_document" "main" {
   dynamic "statement" {
     for_each = each.value.statements
     content {
-      sid    = try(statement.value.sid, null)
+      sid    = statement.value.sid
       effect = statement.value.effect
 
       dynamic "principals" {
@@ -44,6 +44,6 @@ resource "aws_iam_policy" "main" {
 resource "aws_iam_role_policy_attachment" "main" {
   for_each = local.iam_roles
 
-  role       = aws_iam_role.main[each.value.role].name
-  policy_arn = aws_iam_policy.main[each.value.policy_to_attach].arn
+  role       = aws_iam_role.main[each.key].name
+  policy_arn = aws_iam_policy.main[each.key].arn
 }

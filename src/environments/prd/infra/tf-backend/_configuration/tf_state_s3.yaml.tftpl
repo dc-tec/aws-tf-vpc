@@ -46,9 +46,10 @@ iam_config:
             - "arn:aws:dynamodb:${region_name}:${account_id}:table/${dynamodb_table_name}"
 
   roles:
-    - name: "tf_state_backend_role"
-      description: "Role for Terraform State Management"
-      assume_role_policy: "assume_role_policy"
-      policy_to_attach: "tf_backend_policy"
+    tf_backend_role:
+        name: "tf-state-backend-role"
+        description: "Role for Terraform State Management"
+        assume_role_policy: "assume_role_policy"
+        policy_to_attach: "tf_backend_policy"
 
     

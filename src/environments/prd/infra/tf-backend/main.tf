@@ -32,7 +32,7 @@ resource "aws_dynamodb_table" "main" {
 
 module "s3" {
   source  = "app.terraform.io/deCort-tech/s3/aws"
-  version = "1.0.0"
+  version = "1.1.1"
 
   ## S3 configuration
   s3_config = local.s3_config

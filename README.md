@@ -39,22 +39,22 @@ The EC2 module creates EC2 instances. It depends on the VPC module and takes the
 
 ## Usage
 Before you run, make sure that you have a IAM account in AWS with access and secret keys. Set these as environment variables:
-```
+```sh
  export AWS_ACCESS_KEY_ID=<ACCES_KEY_ID>
  export AWS_SECRET_ACCESS_KEY=<ACCESS_KEY>
 ```
 
 To use this Terraform configuration, first initialize your Terraform workspace:
-```
+```sh
 terraform init
 ```
 
 Then, create a plan:
-```
+```sh
 terraform plan
 ```
 
 If the plan looks good, apply it:
-```
+```sh
 terraform apply
 ```
